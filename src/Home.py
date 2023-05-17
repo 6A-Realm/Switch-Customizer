@@ -1,37 +1,33 @@
-from utils.contributors import Contributors
 import streamlit as st
-from utils.ips_gen import Generate
+from utils.create_background import Background
 
 
-# Pull contributors
-contributors = Contributors.pull()
+def main():
+    """Home page for Nintendo Switch Customizer"""
 
-# Configure default settings for the page
-st.set_page_config(
-    page_title = "Boot Logo Generator",
-    page_icon = "🎮",
-    layout = "wide",
-    initial_sidebar_state = "expanded"
-)
+    # Configure default settings for the page
+    st.set_page_config(
+        page_title = "Nintendo Switch Customizer",
+        page_icon = "🎮",
+        layout = "wide",
+        # Hide the sidebar on mobile-sized devices
+        initial_sidebar_state = "auto"
+    )
 
-# Basic HTML and also remove hamburger menu
-st.markdown("<style>#MainMenu {visibility: hidden;}</style><center><h1> Generate Custom Boot Logos</h1>", unsafe_allow_html = True)
-st.write('<p style="text-align: center;font-size:20px;" > <bold> This web app generates custom IPS patches for your modded CFW Nintendo Switch. </bold><p><br>', unsafe_allow_html = True)
+    Background.place()
 
+    # Basic HTML and also remove hamburger menu
+    st.markdown("<style>#MainMenu {visibility: hidden;}footer {visibility: hidden;}</style><center><h1> Nintendo Switch Customizer </h1>", unsafe_allow_html = True)
+    st.write('<p style="text-align: center;font-size:20px;" > <bold> This web app is meant to give some customizability and individuality to your CFW Nintendo Swtch. </bold><p><br>', unsafe_allow_html = True)
+    st.write('<p style="text-align: center;font-size:20px;" > <bold> Use the sidebar to jump between functions. </bold><p><br>', unsafe_allow_html = True)
 
-# Create boot logo ips patches expander
-with st.expander(":camera: Generate Boot Logo"):
+    # Capabilites expander
+    with st.expander(":muscle: Capabilites", expanded = True):
+        st.write("This web app has the power to generate:\n - Custom IPS patches for custom bootlogos\n - Custom [hekate](https://github.com/CTCaer/hekate) image resources and configs files\n - Config.ini files for [sys-tweak](https://github.com/p-sam/switch-sys-tweak)")
 
-    # Choose an image prompt
-    input = st.file_uploader("Choose an image:", accept_multiple_files = False, type =[ "png", "jpg", "jpeg"])
+    # Contribute
+    with st.expander(":thinking_face: Contribute", expanded = True):
+        st.write("This is an open source project and you are more than welcome to contribute. Feel free to create [issues](https://github.com/6A-Realm/Bootlogo-Generator/issues), [pull requests](https://github.com/6A-Realm/Bootlogo-Generator/pulls), or view the [source code](https://github.com/6A-Realm/Bootlogo-Generator).")
 
-    if input is not None:
-        Generate.bootlogo_ips(input)
-
-# How to use expander
-with st.expander(":information_source: How To Use"):
-    st.write("This project uses Python to create IPS patches for a desired image for your CFW Nintendo Switch. Only PNG and JPG images are curently supported. Choose your desired image then click the prompted button to download a zip file of your patches. The files are already sorted for you, all you have to do is exact the zip file and drag and drop the atmosphere folder into the root of your SD card. Then you are done, happy generating!")
-
-# Credits expander
-with st.expander(":sparkles: Notible Contributors"):
-    st.write(contributors)
+if __name__ == "__main__":
+    main()
