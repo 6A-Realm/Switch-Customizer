@@ -12,7 +12,7 @@ Background.place()
 
 # Basic HTML and also remove hamburger menu
 st.markdown("<style>#MainMenu {visibility: hidden;}footer {visibility: hidden;}</style><center><h1> Generate Custom Boot Logos</h1>", unsafe_allow_html = True)
-st.write('<p style="text-align: center;font-size:20px;" > <bold> This web app generates custom IPS patches for your modded CFW Nintendo Switch. </bold><p><br>', unsafe_allow_html = True)
+st.write('<p style="text-align: center;font-size:20px;" > <bold> Generate custom IPS patches for your modded CFW Nintendo Switch. </bold><p><br>', unsafe_allow_html = True)
 
 
 # Create boot logo ips patches expander
