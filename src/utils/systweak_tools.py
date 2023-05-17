@@ -48,7 +48,7 @@ class Reformat:
             display_version = st.text_input("Enter the new title display version: ")
 
             if title and name and author and display_version:
-                if st.button("Submit", key = 2):
+                if st.button("Submit", key = 4):
 
                     # Preview config.ini
                     config = f"[override_nacp]\nname={name}\nauthor={author}\ndisplay_version={display_version}"
