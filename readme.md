@@ -3,9 +3,9 @@ This web app is meant to give some customizability and individuality to your CFW
 
 ## Capabilities
 This web app has the power to generate:
-- Custom IPS patches for custom bootlogos
-- Custom [hekate](https://github.com/CTCaer/hekate) image resources and configs files
-- Config.ini files for [sys-tweak](https://github.com/p-sam/switch-sys-tweak)
+1. Custom IPS patches for custom bootlogos
+2. Custom [hekate](https://github.com/CTCaer/hekate) image resources and configs files
+3. Config.ini files for [sys-tweak](https://github.com/p-sam/switch-sys-tweak)
 
 ## Contributors
 - [friedkeenan](https://github.com/friedkeenan): initial work with [switch logo patcher](https://github.com/friedkeenan/switch-logo-patcher)

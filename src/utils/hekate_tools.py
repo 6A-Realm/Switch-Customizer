@@ -7,87 +7,92 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 class Tools:
     def create_logo():
+        try:
+            img = st.file_uploader("Choose an image:", accept_multiple_files = False, type =[ "png", "jpg", "jpeg"], key = 1)
 
-        img = st.file_uploader("Choose an image:", accept_multiple_files = False, type =[ "png", "jpg", "jpeg"], key = 1)
+            if img:
+                st.spinner(text = "Reformating image...")
 
-        if img:
-            st.spinner(text = "Reformating image...")
+                # Open the image
+                image = Image.open(img)
 
-            # Open the image
-            image = Image.open(img)
+                # Get the current dimensions
+                current_width, current_height = image.size
 
-            # Get the current dimensions
-            current_width, current_height = image.size
+                # Check if resizing is necessary
+                if current_width > HekateData.logo_width or current_height > HekateData.logo_height:
 
-            # Check if resizing is necessary
-            if current_width > HekateData.logo_width or current_height > HekateData.logo_height:
+                    # Resize the image
+                    aspect_ratio = current_width / current_height
+                    if aspect_ratio > (HekateData.logo_width / HekateData.logo_height):
+                        new_width = HekateData.logo_width
+                        new_height = int(HekateData.logo_width / aspect_ratio)
+                    else:
+                        new_height = HekateData.logo_height
+                        new_width = int(HekateData.logo_height * aspect_ratio)
 
-                # Resize the image
-                aspect_ratio = current_width / current_height
-                if aspect_ratio > (HekateData.logo_width / HekateData.logo_height):
-                    new_width = HekateData.logo_width
-                    new_height = int(HekateData.logo_width / aspect_ratio)
-                else:
-                    new_height = HekateData.logo_height
-                    new_width = int(HekateData.logo_height * aspect_ratio)
+                    image = image.resize((new_width, new_height), Image.ANTIALIAS)
 
-                image = image.resize((new_width, new_height), Image.ANTIALIAS)
+                # Check if rotation is necessary
+                if image.size[0] == HekateData.logo_height and image.size[1] == HekateData.logo_width:
 
-            # Check if rotation is necessary
-            if image.size[0] == HekateData.logo_height and image.size[1] == HekateData.logo_width:
+                    # Rotate the image counterclockwise by 90 degrees
+                    image = image.transpose(Image.ROTATE_270)
 
-                # Rotate the image counterclockwise by 90 degrees
-                image = image.transpose(Image.ROTATE_270)
+                # Convert to 32-bit ARGB mode
+                image = image.convert("RGBA")
+                image_data = image.tobytes("raw", "RGBA")
 
-            # Convert to 32-bit ARGB mode
-            image = image.convert("RGBA")
-            image_data = image.tobytes("raw", "RGBA")
+                st.image(image, caption = "Bootlogo preview")
 
-            st.image(image, caption = "Bootlogo preview")
-
-            # Save the resized and rotated image
-            img_buffer = BytesIO()
-            image.save(img_buffer, "BMP", transparency = 0, dpi = (300, 300))
+                # Save the resized and rotated image
+                img_buffer = BytesIO()
+                image.save(img_buffer, "BMP", transparency = 0, dpi = (300, 300))
 
 
-            # Create zipfile with icon
-            zip_buffer = BytesIO()
-            with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
-                zip_file.writestr(f"bootloader/res/bootlogo.bmp", img_buffer.getvalue())
+                # Create zipfile with icon
+                zip_buffer = BytesIO()
+                with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
+                    zip_file.writestr(f"bootloader/res/bootlogo.bmp", img_buffer.getvalue())
 
-            st.download_button("✅ Click here to download", zip_buffer, file_name = HekateData.file_name_logo, use_container_width = True, key = 7)
+                st.download_button("✅ Click here to download", zip_buffer, file_name = HekateData.file_name_logo, use_container_width = True, key = 7)
 
+        except Exception:
+            st.error(f"An error has occurred", icon = "🚨")
     
     def create_background():
-        img = st.file_uploader("Choose an image:", accept_multiple_files = False, type =[ "png", "jpg", "jpeg"], key = 2)
+        try:
+            img = st.file_uploader("Choose an image:", accept_multiple_files = False, type =[ "png", "jpg", "jpeg"], key = 2)
 
-        if img:
-            st.spinner(text = "Reformating image...")
+            if img:
+                st.spinner(text = "Reformating image...")
 
-            # Open the image
-            image = Image.open(img)
+                # Open the image
+                image = Image.open(img)
 
-            # Check if resizing is necessary
-            if image.size != (HekateData.background_width, HekateData.background_height):
-                # Resize the image
-                image = image.resize((HekateData.background_width, HekateData.background_height), Image.ANTIALIAS)
+                # Check if resizing is necessary
+                if image.size != (HekateData.background_width, HekateData.background_height):
+                    # Resize the image
+                    image = image.resize((HekateData.background_width, HekateData.background_height), Image.ANTIALIAS)
 
-            # Convert to 32-color RGB mode
-            image = image.convert("P", palette = Image.ADAPTIVE, colors = 32)
+                # Convert to 32-color RGB mode
+                image = image.convert("P", palette = Image.ADAPTIVE, colors = 32)
 
-            st.image(image, caption = "Background preview")
+                st.image(image, caption = "Background preview")
 
-            # Save the resized and converted image
-            img_buffer = BytesIO()
-            image.save(img_buffer, "BMP")
+                # Save the resized and converted image
+                img_buffer = BytesIO()
+                image.save(img_buffer, "BMP")
 
-            # Create zipfile with icon
-            zip_buffer = BytesIO()
-            with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
-                zip_file.writestr(f"bootloader/res/background.bmp", img_buffer.getvalue())
+                # Create zipfile with icon
+                zip_buffer = BytesIO()
+                with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
+                    zip_file.writestr(f"bootloader/res/background.bmp", img_buffer.getvalue())
 
-            st.download_button("✅ Click here to download", zip_buffer, file_name = HekateData.file_name_background, use_container_width = True, key = 8)
+                st.download_button("✅ Click here to download", zip_buffer, file_name = HekateData.file_name_background, use_container_width = True, key = 8)
 
+        except Exception:
+            st.error(f"An error has occurred", icon = "🚨")
 
     
     def create_config():
@@ -169,4 +174,4 @@ icon=bootloader/res/icon_switch.bmp
             zip_buffer = BytesIO()
             with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
                 zip_file.writestr("bootloader/hekate_ipl.ini", str.encode(config, "utf-8"))
-            st.download_button("✅ Click here to download", zip_buffer, file_name = "hekate_configs.zip", use_container_width = True, key = 3)
+            st.download_button("✅ Click here to download", zip_buffer, file_name = "hekate_configs.zip", use_container_width = True, key = 9)

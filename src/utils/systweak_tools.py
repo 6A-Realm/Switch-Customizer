@@ -34,7 +34,7 @@ class Reformat:
                 with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
                     zip_file.writestr(f"atmosphere/contents/{title_id}/icon.jpg", img_buffer.getvalue())
 
-                st.download_button("✅ Click here to download", zip_buffer, file_name = SysTweakData.file_name, use_container_width = True)
+                st.download_button("✅ Click here to download", zip_buffer, file_name = SysTweakData.file_name, use_container_width = True, key = 10)
 
         except Exception:
             st.error(f"An error has occurred", icon = "🚨")
@@ -58,7 +58,7 @@ class Reformat:
                     zip_buffer = BytesIO()
                     with ZipFile(zip_buffer, "a", ZIP_DEFLATED, False) as zip_file:
                         zip_file.writestr(f"atmosphere/contents/{title}/config.ini", str.encode(config, "utf-8"))
-                    st.download_button("✅ Click here to download", zip_buffer, file_name = SysTweakData.file_name_title, use_container_width = True)
+                    st.download_button("✅ Click here to download", zip_buffer, file_name = SysTweakData.file_name_title, use_container_width = True, key = 11)
 
         except Exception:
             st.error(f"An error has occurred", icon = "🚨")
