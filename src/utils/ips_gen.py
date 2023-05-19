@@ -5,6 +5,7 @@ from utils.resources import BootlogoData
 from ips import Patch
 from zipfile import ZipFile, ZIP_DEFLATED
 
+
 original_logo = open(r'assets/logo.txt', "rb")
 
 class Generate:
