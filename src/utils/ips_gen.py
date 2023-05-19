@@ -40,7 +40,8 @@ class Generate:
 
                 # Create background with transparency
                 bg = Image.new("RGBA", (BootlogoData.base_width, BootlogoData.base_height), (0, 0, 0, 0))
-                bg.paste(new_logo, ((BootlogoData.base_width - new_logo.width) // 2, (BootlogoData.base_height - new_logo.height) // 2))
+                offset = ((BootlogoData.base_width - new_logo.width) // 2, (BootlogoData.base_height - new_logo.height) // 2)
+                bg.paste(new_logo, offset)
 
                 st.image(bg, caption="Logo preview")
 
