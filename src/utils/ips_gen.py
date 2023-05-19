@@ -8,7 +8,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 original_logo = open(r'assets/logo.txt', "rb")
 
 class Generate:
-    def bootlogo_ips(input, keep_ratio):
+    def bootlogo_ips():
         try:
 
             keep_ratio = st.checkbox("Keep image aspect ratio", value = False)
