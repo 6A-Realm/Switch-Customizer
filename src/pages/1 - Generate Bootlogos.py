@@ -17,12 +17,7 @@ st.write('<p style="text-align: center;font-size:20px;" > <bold> Generate custom
 
 # Create boot logo ips patches expander
 with st.expander(":camera: Generate Boot Logo"):
-
-    # Choose an image prompt
-    input = st.file_uploader("Choose an image:", accept_multiple_files = False, type =[ "png", "jpg", "jpeg"])
-
-    if input is not None:
-        Generate.bootlogo_ips(input)
+    Generate.bootlogo_ips()
 
 # How to use expander
 with st.expander(":information_source: How To Use"):
